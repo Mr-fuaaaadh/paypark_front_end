@@ -55,7 +55,7 @@ const PropertiesByCities = () => {
           },
         }}
       >
-        {stationData.map((station) => (
+        {Array.isArray(stationData) && stationData.map((station) => (
           <SwiperSlide key={station.ownerID}>
             <Link href="/map-v4" className="item">
               <div className="apartment-style1 mb30">
