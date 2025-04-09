@@ -8,7 +8,6 @@ import Image from "next/image";
 import Link from "next/link";
 import axios from "axios";
 
-// Disable SSR for react-select to avoid hydration mismatch
 const Select = dynamic(() => import("react-select"), { ssr: false });
 
 const Hero = () => {
@@ -18,27 +17,33 @@ const Hero = () => {
   const apiEndpoint = process.env.NEXT_PUBLIC_REST_API_ENDPOINT;
 
   useEffect(() => {
-    setIsClient(true); // Ensures the component only renders on the client
+    setIsClient(true);
 
     const fetchData = async () => {
       try {
         const response = await axios.get(`${apiEndpoint}/user/parking/stations/`);
-        setSliderItems(response.data.data);
+        const data = response?.data?.data;
+        if (Array.isArray(data)) {
+          setSliderItems(data);
+        } else {
+          console.warn("Unexpected data format:", data);
+          setSliderItems([]);
+        }
       } catch (error) {
         console.error("Error fetching slider items:", error);
+        setSliderItems([]);
       }
     };
 
     fetchData();
   }, [apiEndpoint]);
 
-  // Avoid SSR mismatch by rendering only on the client
   if (!isClient) return null;
 
   return (
     <>
       <div className="hero-large-home5">
-        {sliderItems.length > 0 && (
+        {Array.isArray(sliderItems) && sliderItems.length > 0 && (
           <Swiper
             direction="vertical"
             spaceBetween={0}
@@ -47,8 +52,7 @@ const Hero = () => {
             autoplay={{ delay: 4000, disableOnInteraction: false }}
             modules={[Thumbs]}
             thumbs={{
-              swiper:
-                thumbsSwiper && !thumbsSwiper.destroyed ? thumbsSwiper : null,
+              swiper: thumbsSwiper && !thumbsSwiper.destroyed ? thumbsSwiper : null,
             }}
             style={{ height: "850px" }}
           >
@@ -58,9 +62,10 @@ const Hero = () => {
                   <div
                     className="slider-slide-item"
                     style={{
-                      backgroundImage: item.images && item.images.length > 0
-                        ? `url(http://13.60.216.198${item.images[0].image})`
-                        : "url(/images/default-placeholder.jpg)",
+                      backgroundImage:
+                        item.images && item.images.length > 0
+                          ? `url(http://13.60.216.198${item.images[0].image})`
+                          : "url(/images/default-placeholder.jpg)",
                     }}
                   >
                     <div className="container">
@@ -95,7 +100,7 @@ const Hero = () => {
         )}
       </div>
 
-      {sliderItems.length > 0 && (
+      {Array.isArray(sliderItems) && sliderItems.length > 0 && (
         <div className="custom_thumbs">
           <Swiper
             direction="vertical"
