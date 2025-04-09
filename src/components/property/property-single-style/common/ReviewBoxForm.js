@@ -3,7 +3,8 @@
 import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 import axios from "axios";
-import Rating from "react-rating";
+import ReactStars from "react-rating-stars-component";
+
 
 const ReviewBoxForm = () => {
   // Local component state
@@ -25,7 +26,7 @@ const ReviewBoxForm = () => {
   useEffect(() => {
     if (success) setSuccess(false);
     if (error) setError(null);
-  }, [rating, reviewText, success, error]); 
+  }, [rating, reviewText, success, error]);
 
 
   // Submit handler
@@ -85,12 +86,15 @@ const ReviewBoxForm = () => {
           <div className="mb-4">
             <label className="fw600 ff-heading mb-2">Rating</label>
             <div>
-              <Rating
-                initialRating={rating}
-                onChange={(value) => setRating(value)}
-                emptySymbol="far fa-star text-gray-300 text-2xl"
-                fullSymbol="fas fa-star text-yellow-400 text-2xl"
+              <ReactStars
+                count={5}
+                value={rating}
+                onChange={(newRating) => setRating(newRating)}
+                size={30}
+                activeColor="#facc15" // Tailwind yellow-400
+                isHalf={false}
               />
+
             </div>
           </div>
 
@@ -133,5 +137,4 @@ const ReviewBoxForm = () => {
     </form>
   );
 };
-
 export default ReviewBoxForm;

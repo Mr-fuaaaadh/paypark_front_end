@@ -6,6 +6,12 @@
       "static/css/app/layout.css",
       "static/chunks/app/layout.js"
     ],
+    "/(property)/(single-style)/single-v5/[ownerID]/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/(property)/(single-style)/single-v5/[ownerID]/page.css",
+      "static/chunks/app/(property)/(single-style)/single-v5/[ownerID]/page.js"
+    ],
     "/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",

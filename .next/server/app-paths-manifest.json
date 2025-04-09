@@ -1,3 +1,4 @@
 {
+  "/(property)/(single-style)/single-v5/[ownerID]/page": "app/(property)/(single-style)/single-v5/[ownerID]/page.js",
   "/page": "app/page.js"
 }
