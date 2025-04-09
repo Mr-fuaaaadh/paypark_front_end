@@ -9,24 +9,28 @@ import "swiper/swiper-bundle.min.css";
 
 const FeaturedListings = () => {
   const [listings, setListings] = useState([]);
+  const [sliderItems, setSliderItems] = useState([]);
   const apiEndpoint = process.env.NEXT_PUBLIC_REST_API_ENDPOINT;
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(`${apiEndpoint}/user/parking/stations/`);
-        setListings(response.data.data);
+        setSliderItems(response.data.data || []);
       } catch (error) {
-        console.error("Error fetching parking station data:", error);
+        console.error("Error fetching slider items:", error);
+        setSliderItems([]); // Ensure sliderItems is an array even if the fetch fails
       }
     };
-
+  
     fetchData();
-}, [apiEndpoint]); // ✅ Add `apiEndpoint` here
+  }, [apiEndpoint]);
+  
 
 
   return (
     <>
+    
       <Swiper
         spaceBetween={30}
         modules={[Navigation, Pagination]}
