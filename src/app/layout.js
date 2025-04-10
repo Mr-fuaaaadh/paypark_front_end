@@ -25,21 +25,16 @@ const poppins = Poppins({
 
 export default function RootLayout({ children }) {
   useEffect(() => {
-    Aos.init({
-      duration: 1200,
-      once: true,
-    });
-
-    // ✅ Dynamically import Bootstrap JS on client-side only
-    import("bootstrap/dist/js/bootstrap.bundle.min.js");
+    // Ensure this only runs on client side
+    if (typeof window !== 'undefined') {
+      Aos.init({ duration: 1200, once: true });
+      import("bootstrap/dist/js/bootstrap.bundle.min.js");
+    }
   }, []);
 
   return (
-    <html lang="en">
-      <body
-        className={`body ${poppins.className} ${dmSans.className}`}
-        cz-shortcut-listen="false"
-      >
+    <html lang="en" suppressHydrationWarning>
+      <body className={`body ${poppins.className} ${dmSans.className}`}>
         <div className="wrapper ovh">{children}</div>
         <ScrollToTop />
       </body>

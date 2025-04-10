@@ -1,6 +1,15 @@
 "use client";
-import Select from "react-select";
+import dynamic from 'next/dynamic';
 import SingleAgentInfo from "./SingleAgentInfo";
+
+// Dynamically import react-select with SSR disabled
+const Select = dynamic(
+  () => import('react-select').then(mod => mod.default),
+  { 
+    ssr: false,
+    loading: () => <div className="select-loading">Loading...</div>
+  }
+);
 
 const InfoWithForm = () => {
   const inqueryType = [
@@ -45,7 +54,6 @@ const InfoWithForm = () => {
                 />
               </div>
             </div>
-            {/* End .col */}
 
             <div className="col-md-6">
               <div className="mb20">
@@ -59,7 +67,6 @@ const InfoWithForm = () => {
                 />
               </div>
             </div>
-            {/* End .col */}
 
             <div className="col-md-6">
               <div className="mb20">
@@ -73,7 +80,6 @@ const InfoWithForm = () => {
                 />
               </div>
             </div>
-            {/* End .col */}
 
             <div className="col-md-6">
               <div className="widget-wrapper sideborder-dropdown">
@@ -83,7 +89,7 @@ const InfoWithForm = () => {
                 <div className="form-style2 input-group">
                   <Select
                     defaultValue={[inqueryType[0]]}
-                    name="colors"
+                    name="inqueryType"
                     options={inqueryType}
                     styles={customStyles}
                     className="custom-react_select"
@@ -94,7 +100,6 @@ const InfoWithForm = () => {
                 </div>
               </div>
             </div>
-            {/* End .col */}
 
             <div className="col-md-12">
               <div className="mb10">
@@ -109,7 +114,6 @@ const InfoWithForm = () => {
                 />
               </div>
             </div>
-            {/* End .col */}
 
             <div className="checkbox-style1 d-block d-sm-flex align-items-center justify-content-between mb10">
               <label className="custom_checkbox fz14 ff-heading">
@@ -118,7 +122,6 @@ const InfoWithForm = () => {
                 <span className="checkmark" />
               </label>
             </div>
-            {/* End .col */}
 
             <div className="btn-area mt20">
               <button className="ud-btn btn-white2">
