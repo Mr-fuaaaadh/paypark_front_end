@@ -17,6 +17,7 @@ const FeaturedListings = () => {
       try {
         const response = await axios.get(`${apiEndpoint}/user/parking/stations/`);
         setSliderItems(response.data.data || []);
+        console.log("Slider items:", response.data.data);
       } catch (error) {
         console.error("Error fetching slider items:", error);
         setSliderItems([]); // Ensure sliderItems is an array even if the fetch fails
@@ -58,7 +59,7 @@ const FeaturedListings = () => {
           },
         }}
       >
-        {listings.map((listing) => (
+        {sliderItems.map((listing) => (
           <SwiperSlide key={listing.ownerID}>
             <div className="item">
               <div className="listing-style7 mb60">
